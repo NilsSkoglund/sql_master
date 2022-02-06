@@ -1,0 +1,4 @@
+discounttype,stor_id,lowqty,highqty,discount
+"Initial Customer",NULL,NULL,NULL,10.50
+"Volume Discount",NULL,100,1000,6.70
+"Customer Discount",8042,NULL,NULL,5.00

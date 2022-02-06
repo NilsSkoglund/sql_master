@@ -1,0 +1,53 @@
+-- This is a step by step solution to Bonus Question 2 in the Join lab
+-- This "codealong" is optional to do, the teacher decides 
+
+-------------------------------------------------------------------------------
+-- BONUS 1 (from the join lab):
+-- We want to get the average management salary per department from high to low
+-- (and we want the name of the department)
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- One way to approach more complicated queries
+-- Break it down into steps
+-------------------------------------------------------------------------------
+-- Step 1
+-- First let's get the managers & department names
+SELECT *
+FROM emp.dept_manager AS dm
+INNER JOIN emp.departments AS d
+    ON dm.dept_no = d.dept_no;
+
+
+-- Step 2
+-- Now lets add the salary information
+SELECT *
+FROM emp.dept_manager AS dm
+INNER JOIN emp.departments AS d
+    ON dm.dept_no = d.dept_no
+INNER JOIN emp.salaries AS s
+    ON dm.emp_no = s.emp_no;
+
+
+-- Step 3
+-- Lets add the GROUP BY
+-- we always prefer grouping by a unique identifier such as dept_no
+-- instead of dept_name where they might be a non-unique value
+SELECT *
+FROM emp.dept_manager AS dm
+INNER JOIN emp.departments AS d
+    ON dm.dept_no = d.dept_no
+INNER JOIN emp.salaries AS s
+    ON dm.emp_no = s.emp_no
+GROUP BY dm.dept_no;
+
+-- Step 4
+-- Lets populate the SELECT statement and ORDER BY
+SELECT d.dept_name AS department_name
+    ,AVG(s.salary) AS avg_management_salary
+FROM emp.dept_manager AS dm
+INNER JOIN emp.departments AS d
+    ON dm.dept_no = d.dept_no
+INNER JOIN emp.salaries AS s
+    ON dm.emp_no = s.emp_no
+GROUP BY dm.dept_no, d.dept_name
+ORDER BY avg_management_salary DESC;
